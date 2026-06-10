@@ -433,7 +433,7 @@
   <button onclick="showScreen('screen-badge-detail')">② Badge Detail</button>
   <button onclick="showScreen('screen-unlock')">③ Badge Unlock 🎉</button>
   <button onclick="showScreen('screen-feed')">④ Feed + Pills</button>
-  <button onclick="showScreen('screen-other')">⑤ Other User Profile</button>
+  <button onclick="showScreen('screen-other')">⑤ Judy's Profile</button>
 </div>
 
 <div class="phone">
@@ -892,7 +892,7 @@
 </div>
 
 <!-- ═══════════════════════════
-     SCREEN 5: OTHER USER PROFILE
+     SCREEN 5: OTHER USER PROFILE (Judy Thelen — real data)
 ═══════════════════════════ -->
 <div class="screen" id="screen-other">
   <div class="status-bar">
@@ -902,7 +902,7 @@
   </div>
   <div class="nav-bar">
     <span class="back-btn" onclick="showScreen('screen-feed')">‹</span>
-    <span class="nav-title">mia_park</span>
+    <span class="nav-title">judy</span>
     <div class="nav-actions">
       <span class="nav-icon">⬆️</span>
       <span class="nav-icon">⋯</span>
@@ -911,22 +911,22 @@
   <div class="scroll-content">
     <div class="profile-header">
       <div class="profile-photo-wrap">
-        <div class="profile-photo" style="background: linear-gradient(135deg, #329966, #47a375);">M</div>
+        <div class="profile-photo" style="background: linear-gradient(135deg, #134F5C, #42727C);">J</div>
       </div>
-      <div class="profile-name">Mia Park</div>
-      <div class="profile-username">@mia_park</div>
-      <div class="profile-since">Member since Mar 2021</div>
-      <div class="profile-bio">Korean food obsessive. NYC → SF explorer 🇰🇷</div>
+      <div class="profile-name">Judy Thelen</div>
+      <div class="profile-username">@judy · New York, NY</div>
+      <div class="profile-since">Member since Aug 2019</div>
+      <div class="profile-bio">"I rank everywhere I eat..."</div>
     </div>
 
     <div class="stats-row">
       <div class="stat-item">
-        <div class="stat-num">1,204</div>
+        <div class="stat-num">1,225</div>
         <div class="stat-label">Rankings</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">🔥 61</div>
-        <div class="stat-label">Streak</div>
+        <div class="stat-num">1.1M</div>
+        <div class="stat-label">Followers</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">Top 1%</div>
@@ -939,52 +939,56 @@
       <div class="btn-outline">Message</div>
     </div>
 
-    <!-- Other user's cuisine badges — makes their profile compelling to browse -->
+    <!-- Judy's cuisine badges — real ranking data -->
     <div class="badges-section">
       <div class="badges-section-header">
         <div class="badges-section-title">🏅 Cuisine Badges</div>
       </div>
       <div style="font-size: 11px; color: var(--medium); margin-bottom: 8px;">
-        Mia ranks in the top % of NYC diners for these cuisines
+        Judy ranks in the top % of NYC diners for these cuisines
       </div>
       <div class="pills-scroll">
-        <div class="cuisine-pill platinum" style="cursor:default">
-          <span class="pill-emoji">🥘</span>
+        <!-- American: 313 all-time, #1 cuisine → Gold -->
+        <div class="cuisine-pill gold" style="cursor:default">
+          <span class="pill-emoji">🍔</span>
           <div>
-            <div>Top 1% Korean</div>
+            <div>Top 5% American</div>
             <div class="pill-city">NYC</div>
           </div>
         </div>
-        <div class="cuisine-pill gold" style="cursor:default">
+        <!-- Italian: 213 all-time, #2 cuisine → Silver -->
+        <div class="cuisine-pill silver" style="cursor:default">
+          <span class="pill-emoji">🍝</span>
+          <div>
+            <div>Top 10% Italian</div>
+            <div class="pill-city">NYC</div>
+          </div>
+        </div>
+        <!-- French: 114 all-time → Bronze -->
+        <div class="cuisine-pill bronze" style="cursor:default">
+          <span class="pill-emoji">🥐</span>
+          <div>
+            <div>Top 20% French</div>
+            <div class="pill-city">NYC</div>
+          </div>
+        </div>
+        <!-- Japanese: 100 all-time → in progress toward Bronze -->
+        <div class="progress-pill" style="cursor:default">
           <span class="pill-emoji">🍣</span>
           <div>
-            <div>Top 3% Japanese</div>
-            <div class="pill-city">NYC</div>
-          </div>
-        </div>
-        <div class="cuisine-pill silver" style="cursor:default">
-          <span class="pill-emoji">🍜</span>
-          <div>
-            <div>Top 8% Asian Fusion</div>
-            <div class="pill-city">NYC</div>
-          </div>
-        </div>
-        <div class="cuisine-pill platinum" style="cursor:default">
-          <span class="pill-emoji">🥘</span>
-          <div>
-            <div>Top 2% Korean</div>
-            <div class="pill-city">San Francisco</div>
+            <div>Japanese · 6 away</div>
+            <div class="pill-city">from Top 20% NYC</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Taste match between viewer and profile owner -->
+    <!-- Taste match -->
     <div style="margin: 12px 20px 0; background: var(--primary-light); border-radius: var(--radius-card); padding: 12px 14px; display: flex; align-items: center; gap: 10px;">
       <span style="font-size: 22px;">🤝</span>
       <div>
-        <div style="font-size: 13px; font-weight: 700; color: var(--primary)">87% Taste Match</div>
-        <div style="font-size: 11px; color: var(--primary-tint); margin-top: 1px;">You both love Italian, Japanese, and Korean</div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--primary)">91% Taste Match</div>
+        <div style="font-size: 11px; color: var(--primary-tint); margin-top: 1px;">You both love American, Italian, and French</div>
       </div>
     </div>
 
@@ -992,20 +996,31 @@
     <div class="taste-section">
       <div class="taste-section-title">Taste Profile</div>
       <div class="taste-bars">
+        <!-- Real %s from 1,225 total rankings -->
         <div class="taste-bar-row">
-          <div class="taste-bar-label">Korean</div>
-          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:95%; background: var(--success)"></div></div>
-          <div class="taste-bar-pct">95%</div>
+          <div class="taste-bar-label">American</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:100%; background: var(--success)"></div></div>
+          <div class="taste-bar-pct">26%</div>
+        </div>
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">Italian</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:68%"></div></div>
+          <div class="taste-bar-pct">17%</div>
+        </div>
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">French</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:36%"></div></div>
+          <div class="taste-bar-pct">9%</div>
         </div>
         <div class="taste-bar-row">
           <div class="taste-bar-label">Japanese</div>
-          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:78%"></div></div>
-          <div class="taste-bar-pct">78%</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:32%"></div></div>
+          <div class="taste-bar-pct">8%</div>
         </div>
         <div class="taste-bar-row">
-          <div class="taste-bar-label">Asian Fusion</div>
-          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:60%"></div></div>
-          <div class="taste-bar-pct">60%</div>
+          <div class="taste-bar-label">Seafood</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:30%"></div></div>
+          <div class="taste-bar-pct">8%</div>
         </div>
       </div>
     </div>
