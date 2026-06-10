@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beli — Cuisine Badges Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  /* ── Design tokens (matching Beli variables.scss) ── */
+  :root {
+    --primary:       #134F5C;
+    --primary-tint:  #42727C;
+    --primary-light: #e8f2f4;
+    --success:       #329966;
+    --success-light: #b4d9c6;
+    --warning:       #F2C34A;
+    --warning-light: #fdf3d0;
+    --danger:        #e26969;
+    --dark:          #222428;
+    --medium:        #989aa2;
+    --light:         #f4f5f8;
+    --lighter:       #ffffff;
+    --secondary:     #add8e6;
+    --font-serif:    'Playfair Display', Georgia, serif;
+    --font-body:     'Inter', -apple-system, sans-serif;
+    --radius-pill:   20px;
+    --radius-card:   14px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: #e8e8e8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+    min-height: 100vh;
+  }
+
+  h1.title { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: #555; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 10px; text-align:center; }
+
+  /* ── Nav tabs ── */
+  .screen-nav {
+    display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; justify-content: center;
+  }
+  .screen-nav button {
+    font-family: var(--font-body); font-size: 11px; font-weight: 600;
+    padding: 6px 12px; border-radius: 20px; border: 1.5px solid var(--primary);
+    background: white; color: var(--primary); cursor: pointer; transition: all .18s;
+  }
+  .screen-nav button.active { background: var(--primary); color: white; }
+
+  /* ── Phone shell ── */
+  .phone {
+    width: 390px; height: 844px; background: white;
+    border-radius: 50px; overflow: hidden;
+    box-shadow: 0 30px 90px rgba(0,0,0,.28), 0 0 0 10px #1a1a1a, 0 0 0 12px #333;
+    position: relative; flex-shrink: 0;
+  }
+  .phone-inner {
+    width: 100%; height: 100%; overflow: hidden; position: relative;
+    border-radius: 42px;
+  }
+
+  /* ── Screen ── */
+  .screen { display: none; width: 100%; height: 100%; flex-direction: column; background: white; }
+  .screen.active { display: flex; }
+
+  /* ── Status bar ── */
+  .status-bar {
+    height: 50px; padding: 14px 24px 0; display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; font-weight: 600; color: var(--dark); flex-shrink: 0;
+  }
+  .status-bar .notch { width: 120px; height: 30px; background: #1a1a1a; border-radius: 0 0 18px 18px; position: absolute; left: 50%; transform: translateX(-50%); top: 0; }
+  .status-icons { display: flex; gap: 5px; align-items: center; }
+  .status-icons span { font-size: 12px; }
+
+  /* ── Nav bar ── */
+  .nav-bar {
+    padding: 12px 16px 8px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+  }
+  .nav-bar .back-btn { font-size: 22px; color: var(--dark); cursor: pointer; padding: 2px 6px; }
+  .nav-bar .nav-title { font-family: var(--font-body); font-weight: 600; font-size: 16px; }
+  .nav-bar .nav-actions { display: flex; gap: 6px; }
+  .nav-bar .nav-icon { font-size: 20px; cursor: pointer; padding: 4px; }
+
+  /* ── Scrollable content ── */
+  .scroll-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .scroll-content::-webkit-scrollbar { display: none; }
+
+  /* ── Profile header ── */
+  .profile-header { padding: 0 20px 12px; text-align: center; }
+  .profile-photo-wrap { position: relative; display: inline-block; margin-bottom: 8px; }
+  .profile-photo {
+    width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-tint));
+    display: flex; align-items: center; justify-content: center; font-size: 36px; color: white;
+    font-family: var(--font-serif); font-weight: 700; overflow: hidden;
+  }
+  .profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .sc-badge-dot {
+    position: absolute; bottom: 3px; right: 3px;
+    background: var(--primary); color: white; font-size: 9px; font-weight: 700;
+    padding: 2px 5px; border-radius: 8px; border: 2px solid white;
+  }
+  .profile-name { font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--dark); display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .profile-username { font-size: 13px; color: var(--medium); margin-top: 1px; }
+  .profile-since { font-size: 12px; color: var(--medium); margin-top: 2px; }
+  .profile-bio { font-size: 13px; color: var(--dark); margin: 6px auto 0; max-width: 260px; line-height: 1.4; }
+
+  /* ── Stats row ── */
+  .stats-row { display: flex; justify-content: center; gap: 0; margin: 10px 20px 0; border: 1px solid #eee; border-radius: var(--radius-card); overflow: hidden; }
+  .stat-item { flex: 1; padding: 10px 8px; text-align: center; border-right: 1px solid #eee; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-weight: 700; font-size: 17px; color: var(--dark); }
+  .stat-label { font-size: 10px; color: var(--medium); margin-top: 1px; text-transform: uppercase; letter-spacing: .3px; }
+
+  /* ── Profile buttons ── */
+  .profile-buttons { display: flex; gap: 8px; padding: 10px 20px 0; }
+  .btn-outline {
+    flex: 1; padding: 8px; border: 1.5px solid #ddd; border-radius: 10px;
+    background: white; font-size: 13px; font-weight: 600; color: var(--dark);
+    text-align: center; cursor: pointer;
+  }
+  .btn-primary {
+    flex: 1; padding: 8px; border: none; border-radius: 10px;
+    background: var(--primary); font-size: 13px; font-weight: 600; color: white;
+    text-align: center; cursor: pointer;
+  }
+
+  /* ══════════════════════════════
+     CUISINE PILLS SECTION
+  ══════════════════════════════ */
+  .badges-section { padding: 14px 20px 0; }
+  .badges-section-header {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+  }
+  .badges-section-title { font-size: 12px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: .5px; }
+  .badges-section-link { font-size: 12px; color: var(--primary); font-weight: 600; cursor: pointer; }
+
+  .pills-scroll { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 4px; }
+  .pills-scroll::-webkit-scrollbar { display: none; }
+
+  /* ── Tier color tokens ── */
+  /* Bronze  = Top 20% */
+  /* Silver  = Top 10% */
+  /* Gold    = Top 5%  */
+  /* Platinum= Top 1%  */
+
+  /* Earned pill — base (overridden by tier class) */
+  .cuisine-pill {
+    display: flex; align-items: center; gap: 5px;
+    padding: 5px 11px 5px 8px;
+    border-radius: var(--radius-pill);
+    background: var(--primary); color: white;
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+    cursor: pointer; flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(19,79,92,.22);
+    transition: transform .15s;
+  }
+  .cuisine-pill:active { transform: scale(.96); }
+  .cuisine-pill .pill-emoji { font-size: 14px; }
+  .cuisine-pill .pill-city { font-size: 10px; opacity: .78; font-weight: 500; }
+
+  /* Bronze — Top 20% */
+  .cuisine-pill.bronze {
+    background: linear-gradient(135deg, #a0522d, #cd7f32);
+    box-shadow: 0 2px 6px rgba(160,82,45,.28);
+    color: white;
+  }
+  /* Silver — Top 10% */
+  .cuisine-pill.silver {
+    background: linear-gradient(135deg, #707880, #9ea3ab);
+    box-shadow: 0 2px 6px rgba(112,120,128,.28);
+    color: white;
+  }
+  /* Gold — Top 5% */
+  .cuisine-pill.gold {
+    background: linear-gradient(135deg, #b8860b, #d4a017, #e8bf3a);
+    box-shadow: 0 2px 8px rgba(184,134,11,.35);
+    color: white;
+  }
+  /* Platinum — Top 1% : icy white */
+  .cuisine-pill.platinum {
+    background: linear-gradient(135deg, #ccd8e8, #e8eef8, #f4f7fd);
+    box-shadow: 0 2px 10px rgba(180,200,230,.5);
+    color: #2a3a5c;
+    border: 1px solid rgba(180,200,230,.6);
+  }
+
+  /* Progress pill (not yet earned) */
+  .progress-pill {
+    display: flex; align-items: center; gap: 5px;
+    padding: 5px 11px 5px 8px;
+    border-radius: var(--radius-pill);
+    background: var(--light); color: var(--dark);
+    font-size: 12px; font-weight: 500; white-space: nowrap;
+    cursor: pointer; flex-shrink: 0; border: 1.5px dashed #ccc;
+    transition: transform .15s;
+  }
+  .progress-pill:active { transform: scale(.96); }
+  .progress-pill .pill-emoji { font-size: 14px; opacity: .7; }
+  .progress-pill .pill-progress { font-size: 10px; color: var(--medium); }
+
+  /* ── Section divider ── */
+  .divider { height: 8px; background: var(--light); margin: 14px 0 0; }
+
+  /* ── Taste profile section ── */
+  .taste-section { padding: 14px 20px; }
+  .taste-section-title { font-size: 12px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+  .taste-bars { display: flex; flex-direction: column; gap: 8px; }
+  .taste-bar-row { display: flex; align-items: center; gap: 8px; }
+  .taste-bar-label { font-size: 12px; color: var(--dark); width: 80px; flex-shrink: 0; }
+  .taste-bar-track { flex: 1; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
+  .taste-bar-fill { height: 100%; border-radius: 3px; background: var(--primary); }
+  .taste-bar-pct { font-size: 11px; color: var(--medium); width: 28px; text-align: right; flex-shrink: 0; }
+
+  /* ── Tab bar ── */
+  .tab-bar {
+    height: 82px; border-top: 1px solid #eee; display: flex; align-items: flex-start;
+    padding: 10px 0 0; flex-shrink: 0;
+  }
+  .tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; }
+  .tab-icon { font-size: 22px; }
+  .tab-label { font-size: 9px; color: var(--medium); font-weight: 500; }
+  .tab-item.active .tab-label { color: var(--primary); }
+  .tab-item.active .tab-icon { filter: none; }
+
+  /* ═══════════════════════════════════════
+     SCREEN 2: BADGE DETAIL
+  ═══════════════════════════════════════ */
+  .badge-detail-header {
+    background: linear-gradient(160deg, var(--primary) 0%, var(--primary-tint) 100%);
+    padding: 20px 20px 28px; text-align: center; color: white;
+  }
+  .badge-circle-large {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: rgba(255,255,255,.18); border: 3px solid rgba(255,255,255,.5);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px; font-size: 44px;
+    box-shadow: 0 0 0 8px rgba(255,255,255,.08);
+  }
+  .badge-title { font-family: var(--font-serif); font-size: 22px; font-weight: 700; line-height: 1.2; }
+  .badge-subtitle { font-size: 13px; opacity: .8; margin-top: 4px; }
+  .badge-city-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(255,255,255,.2); border-radius: 20px;
+    padding: 4px 10px; font-size: 12px; font-weight: 600; margin-top: 8px;
+  }
+  .badge-stats-row { display: flex; gap: 0; margin: 16px 20px 0; border: 1px solid #eee; border-radius: var(--radius-card); overflow: hidden; }
+  .badge-stat { flex: 1; padding: 12px 8px; text-align: center; border-right: 1px solid #eee; }
+  .badge-stat:last-child { border-right: none; }
+  .badge-stat-num { font-weight: 700; font-size: 18px; color: var(--dark); }
+  .badge-stat-label { font-size: 10px; color: var(--medium); margin-top: 2px; text-transform: uppercase; letter-spacing: .3px; }
+
+  /* Progress toward next tier */
+  .progress-section { padding: 16px 20px 0; }
+  .progress-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+  .progress-subtitle { font-size: 12px; color: var(--medium); margin-bottom: 10px; }
+  .tier-progress-bar { position: relative; height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin-bottom: 8px; }
+  .tier-progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-tint)); border-radius: 5px; transition: width .5s; }
+  .tier-labels { display: flex; justify-content: space-between; }
+  .tier-label { font-size: 10px; color: var(--medium); }
+  .tier-label.active { color: var(--primary); font-weight: 600; }
+
+  .tier-chips { display: flex; gap: 6px; margin-top: 12px; }
+  .tier-chip { display: flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; border: 1.5px solid transparent; }
+  .tier-chip.bronze  { background: linear-gradient(135deg, #a0522d, #cd7f32); color: white; }
+  .tier-chip.silver  { background: linear-gradient(135deg, #707880, #9ea3ab); color: white; }
+  .tier-chip.gold    { background: linear-gradient(135deg, #b8860b, #d4a017, #e8bf3a); color: white; }
+  .tier-chip.platinum{ background: linear-gradient(135deg, #ccd8e8, #e8eef8); color: #2a3a5c; border: 1px solid rgba(180,200,230,.5); }
+  .tier-chip.next    { background: var(--light); color: var(--medium); border-color: #ddd; }
+
+  /* Explainer */
+  .explainer-card { margin: 16px 20px 0; background: var(--light); border-radius: var(--radius-card); padding: 14px; }
+  .explainer-title { font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .explainer-text { font-size: 12px; color: var(--medium); line-height: 1.5; }
+
+  .share-btn-large {
+    margin: 16px 20px 0; padding: 14px; background: var(--primary); color: white;
+    border: none; border-radius: var(--radius-card); font-size: 15px; font-weight: 700;
+    width: calc(100% - 40px); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+
+  /* ═══════════════════════════════════════
+     SCREEN 3: BADGE UNLOCK CELEBRATION
+  ═══════════════════════════════════════ */
+  #screen-unlock { background: var(--primary); }
+  .unlock-bg {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    justify-content: flex-start; padding: 40px 24px 0; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .confetti-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+  .confetti-dot { position: absolute; width: 8px; height: 8px; border-radius: 2px; animation: confettiFall 3s ease-in infinite; }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(600px) rotate(720deg); opacity: 0; }
+  }
+  .unlock-badge-circle {
+    width: 130px; height: 130px; border-radius: 50%;
+    background: rgba(255,255,255,.18); border: 4px solid rgba(255,255,255,.6);
+    display: flex; align-items: center; justify-content: center; font-size: 60px;
+    margin-bottom: 20px; position: relative; z-index: 2;
+    box-shadow: 0 0 0 10px rgba(255,255,255,.08), 0 0 0 20px rgba(255,255,255,.04);
+    animation: badgePop .5s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  }
+  @keyframes badgePop {
+    0% { transform: scale(0.3); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .unlock-eyebrow { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.7); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; position: relative; z-index: 2; }
+  .unlock-title { font-family: var(--font-serif); font-size: 26px; font-weight: 900; color: white; line-height: 1.2; position: relative; z-index: 2; }
+  .unlock-body { font-size: 14px; color: rgba(255,255,255,.8); margin-top: 10px; line-height: 1.5; position: relative; z-index: 2; max-width: 280px; }
+
+  /* Share card preview */
+  .share-card-preview {
+    margin: 20px 24px 0; background: white; border-radius: 18px;
+    padding: 4px; position: relative; z-index: 2;
+    box-shadow: 0 10px 36px rgba(0,0,0,.32);
+    overflow: hidden;
+  }
+  .share-card-inner {
+    border-radius: 14px; padding: 20px 16px 16px; color: white; text-align: center;
+    position: relative; overflow: hidden;
+    background-image: url('https://source.unsplash.com/400x260/?pasta,italian,food,restaurant');
+    background-size: cover; background-position: center;
+  }
+  .share-card-inner::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(19,79,92,.78) 0%, rgba(9,40,50,.88) 100%);
+  }
+  .share-card-inner > * { position: relative; z-index: 1; }
+  .share-card-logo { font-size: 11px; font-weight: 700; letter-spacing: 2px; opacity: .7; margin-bottom: 10px; }
+  .share-card-emoji { font-size: 40px; margin-bottom: 8px; }
+  .share-card-headline { font-family: var(--font-serif); font-size: 18px; font-weight: 700; line-height: 1.2; }
+  .share-card-sub { font-size: 11px; opacity: .75; margin-top: 4px; }
+  .share-card-rank { font-size: 28px; font-weight: 900; margin-top: 8px; }
+  .share-card-rank-label { font-size: 11px; opacity: .7; }
+  .share-card-username { font-size: 12px; opacity: .6; margin-top: 8px; }
+
+  .unlock-actions { padding: 16px 24px 0; position: relative; z-index: 2; display: flex; flex-direction: column; gap: 8px; width: 100%; }
+  .unlock-share-btn { background: white; color: var(--primary); border: none; border-radius: var(--radius-card); padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .unlock-later-btn { background: rgba(255,255,255,.15); color: white; border: none; border-radius: var(--radius-card); padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+  /* ═══════════════════════════════════════
+     SCREEN 4: FEED ITEM WITH PILL
+  ═══════════════════════════════════════ */
+  .feed-header { background: white; padding: 8px 16px; border-bottom: 1px solid #eee; }
+  .feed-tab-row { display: flex; gap: 0; }
+  .feed-tab { flex: 1; padding: 8px; text-align: center; font-size: 13px; font-weight: 600; color: var(--medium); border-bottom: 2px solid transparent; cursor: pointer; }
+  .feed-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+  .feed-item { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
+  .feed-item-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+  .feed-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-tint)); display: flex; align-items: center; justify-content: center; font-size: 14px; color: white; font-weight: 700; flex-shrink: 0; }
+  .feed-user-info { flex: 1; }
+  .feed-user-name { font-size: 13px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .feed-user-pill {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 2px 7px 2px 5px; border-radius: var(--radius-pill);
+    background: var(--primary); color: white; font-size: 10px; font-weight: 600;
+  }
+  .feed-user-pill.gold { background: linear-gradient(135deg, #c9a227, #e8bf3a); }
+  .feed-action { font-size: 12px; color: var(--medium); margin-top: 1px; }
+  .feed-time { font-size: 11px; color: var(--medium); flex-shrink: 0; }
+
+  .feed-restaurant-card {
+    background: var(--light); border-radius: var(--radius-card); overflow: hidden;
+    display: flex; align-items: stretch;
+  }
+  .feed-rest-img { width: 70px; height: 70px; background: linear-gradient(135deg, #c8956c, #e8b89a); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+  .feed-rest-info { padding: 10px 12px; flex: 1; }
+  .feed-rest-name { font-weight: 700; font-size: 14px; color: var(--dark); }
+  .feed-rest-meta { font-size: 11px; color: var(--medium); margin-top: 2px; }
+  .feed-rest-score { display: inline-flex; align-items: center; gap: 3px; background: var(--primary); color: white; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 8px; margin-top: 5px; }
+
+  /* Progress nudge on feed */
+  .progress-nudge {
+    display: flex; align-items: center; gap: 6px;
+    background: linear-gradient(90deg, var(--primary-light), #f0f8fa);
+    border-radius: 10px; padding: 8px 12px; margin-top: 8px;
+    border-left: 3px solid var(--primary);
+  }
+  .progress-nudge-text { font-size: 12px; color: var(--primary); font-weight: 500; flex: 1; }
+  .progress-nudge-action { font-size: 11px; font-weight: 700; color: var(--primary); }
+  .progress-mini-bar { height: 4px; background: #ddd; border-radius: 2px; overflow: hidden; margin-top: 4px; }
+  .progress-mini-fill { height: 100%; background: var(--primary); border-radius: 2px; }
+
+  .feed-reactions { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+  .feed-reaction-btn { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--medium); cursor: pointer; }
+  .feed-reaction-btn.active { color: var(--danger); }
+
+  /* ═══════════════════════════════════════
+     SCREEN 5: OTHER USER PROFILE
+  ═══════════════════════════════════════ */
+  /* reuses existing profile styles */
+
+  /* ── Annotation labels ── */
+  .annotation {
+    position: relative; pointer-events: none;
+  }
+  .annotation::after {
+    content: attr(data-note);
+    position: absolute; right: -170px; top: 50%; transform: translateY(-50%);
+    background: #1a1a2e; color: white; font-size: 10px; font-weight: 500;
+    padding: 5px 8px; border-radius: 6px; width: 155px; line-height: 1.4; z-index: 999;
+    pointer-events: none;
+  }
+  .annotation::before {
+    content: '';
+    position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+    border: 5px solid transparent; border-right-color: #1a1a2e; z-index: 999;
+    pointer-events: none;
+  }
+
+  /* Legend */
+  .legend { margin-top: 14px; width: 390px; }
+  .legend-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 8px; }
+  .legend-items { display: flex; flex-wrap: wrap; gap: 6px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #555; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<h1 class="title">Beli — Cuisine Badges & Pills · Interactive Mockup</h1>
+
+<div class="screen-nav">
+  <button class="active" onclick="showScreen('screen-profile')">① Own Profile</button>
+  <button onclick="showScreen('screen-badge-detail')">② Badge Detail</button>
+  <button onclick="showScreen('screen-unlock')">③ Badge Unlock 🎉</button>
+  <button onclick="showScreen('screen-feed')">④ Feed + Pills</button>
+  <button onclick="showScreen('screen-other')">⑤ Other User Profile</button>
+</div>
+
+<div class="phone">
+<div class="phone-inner">
+
+<!-- ═══════════════════════════
+     SCREEN 1: OWN PROFILE
+═══════════════════════════ -->
+<div class="screen active" id="screen-profile">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="notch"></div>
+    <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+  <div class="nav-bar">
+    <span></span>
+    <span class="nav-title">rachel_yao</span>
+    <div class="nav-actions">
+      <span class="nav-icon" title="notifications">🔔</span>
+      <span class="nav-icon" title="share">⬆️</span>
+      <span class="nav-icon" title="menu">☰</span>
+    </div>
+  </div>
+  <div class="scroll-content">
+    <!-- Profile header -->
+    <div class="profile-header">
+      <div class="profile-photo-wrap">
+        <div class="profile-photo">R</div>
+      </div>
+      <div class="profile-name">
+        Rachel Yao
+        <span style="background: var(--primary); color: white; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 6px; font-family: var(--font-body);">SC</span>
+      </div>
+      <div class="profile-username">@rachel_yao</div>
+      <div class="profile-since">Member since Jan 2022</div>
+      <div class="profile-bio">Always chasing the best pasta in the city 🍝</div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">847</div>
+        <div class="stat-label">Rankings</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">🔥 28</div>
+        <div class="stat-label">Streak</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Top 3%</div>
+        <div class="stat-label">NYC Diner</div>
+      </div>
+    </div>
+
+    <!-- Profile buttons -->
+    <div class="profile-buttons">
+      <div class="btn-outline">Edit Profile</div>
+      <div class="btn-outline">Share Profile</div>
+    </div>
+
+    <!-- ✨ NEW: CUISINE BADGES SECTION ✨ -->
+    <div class="badges-section">
+      <div class="badges-section-header">
+        <div class="badges-section-title">🏅 Cuisine Badges</div>
+        <div class="badges-section-link" onclick="showScreen('screen-badge-detail')">See all →</div>
+      </div>
+      <div class="pills-scroll">
+        <!-- Platinum: Top 1% -->
+        <div class="cuisine-pill platinum" onclick="showScreen('screen-badge-detail')" title="Tap for detail">
+          <span class="pill-emoji">🍝</span>
+          <div>
+            <div>Top 1% Italian</div>
+            <div class="pill-city">NYC</div>
+          </div>
+        </div>
+        <!-- Gold: Top 5% -->
+        <div class="cuisine-pill gold" onclick="showScreen('screen-badge-detail')">
+          <span class="pill-emoji">🍕</span>
+          <div>
+            <div>Top 5% Pizza</div>
+            <div class="pill-city">NYC</div>
+          </div>
+        </div>
+        <div class="cuisine-pill gold" onclick="showScreen('screen-badge-detail')">
+          <span class="pill-emoji">🍱</span>
+          <div>
+            <div>Top 4% Japanese</div>
+            <div class="pill-city">NYC</div>
+          </div>
+        </div>
+        <!-- Silver: Top 10% -->
+        <div class="cuisine-pill silver" onclick="showScreen('screen-badge-detail')">
+          <span class="pill-emoji">🌮</span>
+          <div>
+            <div>Top 9% Mexican</div>
+            <div class="pill-city">NYC</div>
+          </div>
+        </div>
+        <!-- Progress pill: not yet earned -->
+        <div class="progress-pill" onclick="showScreen('screen-badge-detail')">
+          <span class="pill-emoji">🍣</span>
+          <div>
+            <div style="color: var(--dark)">Sushi</div>
+            <div class="pill-progress">4 more to Top 10%</div>
+          </div>
+        </div>
+        <div class="progress-pill" onclick="showScreen('screen-badge-detail')">
+          <span class="pill-emoji">🥘</span>
+          <div>
+            <div style="color: var(--dark)">Korean</div>
+            <div class="pill-progress">11 more to Top 10%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✨ Progress nudge on profile ✨ -->
+    <div style="padding: 10px 20px 0;">
+      <div style="font-size: 12px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px;">🎯 Next Badges</div>
+      <!-- Sushi nudge -->
+      <div class="progress-nudge" style="margin-bottom: 6px;">
+        <span>🍣</span>
+        <div class="progress-nudge-text" style="flex:1">
+          <div><strong>4 more Sushi</strong> rankings → <span style="color:#707880; font-weight:700">Top 10%</span></div>
+          <div class="progress-mini-bar" style="margin-top:5px"><div class="progress-mini-fill" style="width:60%"></div></div>
+        </div>
+        <span class="progress-nudge-action">Rank →</span>
+      </div>
+      <!-- Korean nudge -->
+      <div class="progress-nudge">
+        <span>🥘</span>
+        <div class="progress-nudge-text" style="flex:1">
+          <div><strong>11 more Korean</strong> rankings → <span style="color:#a0522d; font-weight:700">Top 20%</span></div>
+          <div class="progress-mini-bar" style="margin-top:5px"><div class="progress-mini-fill" style="width:22%"></div></div>
+        </div>
+        <span class="progress-nudge-action">Rank →</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Taste profile breakdown -->
+    <div class="taste-section">
+      <div class="taste-section-title">Taste Profile</div>
+      <div class="taste-bars">
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">Italian</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:88%"></div></div>
+          <div class="taste-bar-pct">88%</div>
+        </div>
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">Japanese</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:72%"></div></div>
+          <div class="taste-bar-pct">72%</div>
+        </div>
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">Pizza</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:65%"></div></div>
+          <div class="taste-bar-pct">65%</div>
+        </div>
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">Mexican</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:48%"></div></div>
+          <div class="taste-bar-pct">48%</div>
+        </div>
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">Seafood</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:32%"></div></div>
+          <div class="taste-bar-pct">32%</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height: 20px"></div>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <div class="tab-item active"><span class="tab-icon">👤</span><span class="tab-label">Profile</span></div>
+    <div class="tab-item"><span class="tab-icon">🏠</span><span class="tab-label">Home</span></div>
+    <div class="tab-item"><span class="tab-icon">🔍</span><span class="tab-label">Search</span></div>
+    <div class="tab-item"><span class="tab-icon">📋</span><span class="tab-label">Lists</span></div>
+    <div class="tab-item"><span class="tab-icon">🍽️</span><span class="tab-label">Rank</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     SCREEN 2: BADGE DETAIL
+═══════════════════════════ -->
+<div class="screen" id="screen-badge-detail">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="notch"></div>
+    <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+  <div class="nav-bar" style="padding-bottom: 0">
+    <span class="back-btn" onclick="showScreen('screen-profile')">‹</span>
+    <span class="nav-title">Cuisine Badge</span>
+    <span class="nav-icon">⬆️</span>
+  </div>
+
+  <div class="scroll-content">
+    <!-- Badge header -->
+    <div class="badge-detail-header">
+      <div class="badge-circle-large">🍝</div>
+      <div class="badge-title">Top 1% Italian Ranker</div>
+      <div class="badge-subtitle">You ranked more Italian restaurants than 99% of diners</div>
+      <div class="badge-city-chip">📍 New York City · Platinum</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="badge-stats-row">
+      <div class="badge-stat">
+        <div class="badge-stat-num">112</div>
+        <div class="badge-stat-label">Italian Ranked</div>
+      </div>
+      <div class="badge-stat">
+        <div class="badge-stat-num">8.4</div>
+        <div class="badge-stat-label">Avg Score</div>
+      </div>
+      <div class="badge-stat">
+        <div class="badge-stat-num">#38</div>
+        <div class="badge-stat-label">NYC Rank</div>
+      </div>
+    </div>
+
+    <!-- Tier progression -->
+    <div class="progress-section">
+      <div class="progress-title">Your Tier: Platinum</div>
+      <div class="progress-subtitle">Rank 5 more Italian to stay in Top 1% next month</div>
+      <div class="tier-progress-bar">
+        <div class="tier-progress-fill" style="width: 95%; background: linear-gradient(90deg, #6a6a8a, #c8c8e0);"></div>
+      </div>
+      <div class="tier-labels">
+        <span class="tier-label">Top 20%</span>
+        <span class="tier-label">Top 5%</span>
+        <span class="tier-label active">Top 1%</span>
+      </div>
+      <div class="tier-chips">
+        <div class="tier-chip bronze">Top 20%</div>
+        <div class="tier-chip silver">Top 10%</div>
+        <div class="tier-chip gold">Top 5%</div>
+        <div class="tier-chip platinum">Top 1% ✓</div>
+      </div>
+    </div>
+
+    <!-- How it's calculated -->
+    <div class="explainer-card">
+      <div class="explainer-title">📊 How this badge is calculated</div>
+      <div class="explainer-text">
+        Based on your Italian restaurant rankings in the last 30 days compared to other active Beli diners in New York City.<br><br>
+        • <span style="color:#cd7f32; font-weight:700">Top 20%</span> — ≥ 3 Italian rankings<br>
+        • <span style="color:#9ea3ab; font-weight:700">Top 10%</span> — ≥ 8 rankings<br>
+        • <span style="color:#d4a017; font-weight:700">Top 5%</span> &nbsp;— ≥ 18 rankings<br>
+        • <span style="color:#9a9ab8; font-weight:700">Top 1%</span> &nbsp;— ≥ 40 rankings<br><br>
+        Badges refresh monthly. You'll get a heads-up before your tier drops.
+      </div>
+    </div>
+
+    <button class="share-btn-large" onclick="openSharesheet('Share this badge')">
+      ⬆️ Share This Badge
+    </button>
+
+    <div style="height: 20px"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     SCREEN 3: BADGE UNLOCK 🎉
+═══════════════════════════ -->
+<div class="screen" id="screen-unlock" style="background: var(--primary);">
+  <div class="status-bar" style="color: white;">
+    <span>9:41</span>
+    <div class="notch"></div>
+    <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+  <div class="nav-bar" style="background: transparent;">
+    <span class="back-btn" style="color: white; opacity: .7;" onclick="showScreen('screen-profile')">✕</span>
+    <span></span><span></span>
+  </div>
+
+  <div class="unlock-bg">
+    <!-- Confetti -->
+    <div class="confetti-layer">
+      <div class="confetti-dot" style="background:#F2C34A; left:10%; animation-delay:0s; animation-duration:2.8s;"></div>
+      <div class="confetti-dot" style="background:#add8e6; left:20%; animation-delay:.3s; animation-duration:3.1s;"></div>
+      <div class="confetti-dot" style="background:white; left:35%; animation-delay:.7s; animation-duration:2.5s; width:5px; height:12px;"></div>
+      <div class="confetti-dot" style="background:#e26969; left:50%; animation-delay:.1s; animation-duration:3.3s;"></div>
+      <div class="confetti-dot" style="background:#F2C34A; left:65%; animation-delay:.5s; animation-duration:2.7s; width:6px; height:10px;"></div>
+      <div class="confetti-dot" style="background:white; left:78%; animation-delay:.9s; animation-duration:3s;"></div>
+      <div class="confetti-dot" style="background:#329966; left:88%; animation-delay:.2s; animation-duration:2.9s;"></div>
+      <div class="confetti-dot" style="background:#add8e6; left:5%; animation-delay:1.2s; animation-duration:3.2s; width:12px; height:5px;"></div>
+      <div class="confetti-dot" style="background:#F2C34A; left:42%; animation-delay:1.5s; animation-duration:2.6s;"></div>
+      <div class="confetti-dot" style="background:white; left:72%; animation-delay:1.8s; animation-duration:3.4s; width:5px; height:14px;"></div>
+    </div>
+
+    <div class="unlock-eyebrow">New Badge Unlocked</div>
+    <div class="unlock-badge-circle">🍝</div>
+    <div class="unlock-title">You're a Top 5%<br>Italian Ranker in NYC!</div>
+    <div class="unlock-body">You ranked more Italian restaurants than 95% of diners in New York City this month. 🎉</div>
+  </div>
+
+  <!-- Share card preview -->
+  <div class="share-card-preview">
+    <div class="share-card-inner">
+      <div class="share-card-logo">BELI</div>
+      <div class="share-card-emoji">🍝</div>
+      <div class="share-card-headline">Top 5% Italian Ranker</div>
+      <div class="share-card-sub">New York City · June 2026</div>
+      <div class="share-card-rank">Top 5%</div>
+      <div class="share-card-rank-label">of NYC Italian diners</div>
+      <div class="share-card-username">@rachel_yao on Beli</div>
+    </div>
+  </div>
+
+  <div class="unlock-actions">
+    <button class="unlock-share-btn" onclick="openSharesheet('Share your badge')">⬆️ Share your badge</button>
+    <button class="unlock-later-btn" onclick="showScreen('screen-profile')">Maybe later</button>
+  </div>
+
+  <div style="height: 16px"></div>
+</div>
+
+<!-- ═══════════════════════════
+     SCREEN 4: FEED + PILLS
+═══════════════════════════ -->
+<div class="screen" id="screen-feed">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="notch"></div>
+    <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+  <div class="nav-bar">
+    <span></span>
+    <span class="nav-title">Home</span>
+    <span class="nav-icon">🔔</span>
+  </div>
+
+  <div class="feed-header">
+    <div class="feed-tab-row">
+      <div class="feed-tab active">Friends</div>
+      <div class="feed-tab">Following</div>
+      <div class="feed-tab">City</div>
+    </div>
+  </div>
+
+  <div class="scroll-content">
+
+    <!-- Feed item 1: friend with Italian Gold badge -->
+    <div class="feed-item">
+      <div class="feed-item-header">
+        <div class="feed-avatar">A</div>
+        <div class="feed-user-info">
+          <div class="feed-user-name">
+            alex_chen
+            <!-- Cuisine pill next to name 🌟 -->
+            <span class="feed-user-pill" style="background: linear-gradient(135deg, #ccd8e8, #e8eef8); color: #2a3a5c; border: 1px solid rgba(180,200,230,.6);">🍝 Top 1% of Italian Diners</span>
+          </div>
+          <div class="feed-action">ranked a restaurant</div>
+        </div>
+        <div class="feed-time">2m</div>
+      </div>
+      <div class="feed-restaurant-card">
+        <div class="feed-rest-img">🍝</div>
+        <div class="feed-rest-info">
+          <div class="feed-rest-name">Via Carota</div>
+          <div class="feed-rest-meta">Italian · West Village · $$</div>
+          <div class="feed-rest-score">⭐ 9.2</div>
+        </div>
+      </div>
+      <div class="feed-reactions">
+        <div class="feed-reaction-btn">❤️ 12</div>
+        <div class="feed-reaction-btn">💬 3</div>
+        <div class="feed-reaction-btn">🔖</div>
+        <div class="feed-reaction-btn">⬆️</div>
+      </div>
+    </div>
+
+    <!-- Feed item 2: your own ranking, with progress nudge -->
+    <div class="feed-item">
+      <div class="feed-item-header">
+        <div class="feed-avatar">R</div>
+        <div class="feed-user-info">
+          <div class="feed-user-name">
+            rachel_yao
+            <span class="feed-user-pill" style="background: linear-gradient(135deg, #b8860b, #e8bf3a);">🍕 Top 5% of Pizza Lovers</span>
+          </div>
+          <div class="feed-action">ranked a restaurant</div>
+        </div>
+        <div class="feed-time">1h</div>
+      </div>
+      <div class="feed-restaurant-card">
+        <div class="feed-rest-img" style="background: linear-gradient(135deg, #e8845a, #f0a87a);">🍕</div>
+        <div class="feed-rest-info">
+          <div class="feed-rest-name">Lucali</div>
+          <div class="feed-rest-meta">Pizza · Carroll Gardens · $$</div>
+          <div class="feed-rest-score">⭐ 9.8</div>
+        </div>
+      </div>
+      <!-- 🌟 Progress nudge toward Sushi badge -->
+      <div class="progress-nudge">
+        <span>🍣</span>
+        <div class="progress-nudge-text">
+          4 more Sushi rankings to earn your <strong>Top 10% Sushi</strong> badge
+          <div class="progress-mini-bar"><div class="progress-mini-fill" style="width: 60%"></div></div>
+        </div>
+        <span class="progress-nudge-action">Rank now →</span>
+      </div>
+      <div class="feed-reactions">
+        <div class="feed-reaction-btn active">❤️ 8</div>
+        <div class="feed-reaction-btn">💬 1</div>
+        <div class="feed-reaction-btn">🔖</div>
+        <div class="feed-reaction-btn">⬆️</div>
+      </div>
+    </div>
+
+    <!-- Feed item 3: friend with Korean badge -->
+    <div class="feed-item">
+      <div class="feed-item-header">
+        <div class="feed-avatar" style="background: linear-gradient(135deg, #329966, #47a375);">M</div>
+        <div class="feed-user-info">
+          <div class="feed-user-name">
+            mia_park
+            <span class="feed-user-pill" style="background: linear-gradient(135deg, #b8860b, #e8bf3a);">🥘 Top 3% of Korean Diners</span>
+          </div>
+          <div class="feed-action">bookmarked a restaurant</div>
+        </div>
+        <div class="feed-time">3h</div>
+      </div>
+      <div class="feed-restaurant-card">
+        <div class="feed-rest-img" style="background: linear-gradient(135deg, #5a8a6a, #7aaa8a);">🥘</div>
+        <div class="feed-rest-info">
+          <div class="feed-rest-name">Jua</div>
+          <div class="feed-rest-meta">Korean · Flatiron · $$$</div>
+          <div class="feed-rest-score" style="background: var(--warning); color: var(--dark);">Want</div>
+        </div>
+      </div>
+      <div class="feed-reactions">
+        <div class="feed-reaction-btn">❤️ 24</div>
+        <div class="feed-reaction-btn">💬 5</div>
+        <div class="feed-reaction-btn">🔖</div>
+        <div class="feed-reaction-btn">⬆️</div>
+      </div>
+    </div>
+
+    <div style="height: 20px"></div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab-item"><span class="tab-icon">👤</span><span class="tab-label">Profile</span></div>
+    <div class="tab-item active"><span class="tab-icon">🏠</span><span class="tab-label">Home</span></div>
+    <div class="tab-item"><span class="tab-icon">🔍</span><span class="tab-label">Search</span></div>
+    <div class="tab-item"><span class="tab-icon">📋</span><span class="tab-label">Lists</span></div>
+    <div class="tab-item"><span class="tab-icon">🍽️</span><span class="tab-label">Rank</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     SCREEN 5: OTHER USER PROFILE
+═══════════════════════════ -->
+<div class="screen" id="screen-other">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="notch"></div>
+    <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+  <div class="nav-bar">
+    <span class="back-btn" onclick="showScreen('screen-feed')">‹</span>
+    <span class="nav-title">mia_park</span>
+    <div class="nav-actions">
+      <span class="nav-icon">⬆️</span>
+      <span class="nav-icon">⋯</span>
+    </div>
+  </div>
+  <div class="scroll-content">
+    <div class="profile-header">
+      <div class="profile-photo-wrap">
+        <div class="profile-photo" style="background: linear-gradient(135deg, #329966, #47a375);">M</div>
+      </div>
+      <div class="profile-name">Mia Park</div>
+      <div class="profile-username">@mia_park</div>
+      <div class="profile-since">Member since Mar 2021</div>
+      <div class="profile-bio">Korean food obsessive. NYC → SF explorer 🇰🇷</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">1,204</div>
+        <div class="stat-label">Rankings</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">🔥 61</div>
+        <div class="stat-label">Streak</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Top 1%</div>
+        <div class="stat-label">NYC Diner</div>
+      </div>
+    </div>
+
+    <div class="profile-buttons">
+      <div class="btn-primary">Following</div>
+      <div class="btn-outline">Message</div>
+    </div>
+
+    <!-- Other user's cuisine badges — makes their profile compelling to browse -->
+    <div class="badges-section">
+      <div class="badges-section-header">
+        <div class="badges-section-title">🏅 Cuisine Badges</div>
+      </div>
+      <div style="font-size: 11px; color: var(--medium); margin-bottom: 8px;">
+        Mia ranks in the top % of NYC diners for these cuisines
+      </div>
+      <div class="pills-scroll">
+        <div class="cuisine-pill platinum" style="cursor:default">
+          <span class="pill-emoji">🥘</span>
+          <div>
+            <div>Top 1% Korean</div>
+            <div class="pill-city">NYC</div>
+          </div>
+        </div>
+        <div class="cuisine-pill gold" style="cursor:default">
+          <span class="pill-emoji">🍣</span>
+          <div>
+            <div>Top 3% Japanese</div>
+            <div class="pill-city">NYC</div>
+          </div>
+        </div>
+        <div class="cuisine-pill silver" style="cursor:default">
+          <span class="pill-emoji">🍜</span>
+          <div>
+            <div>Top 8% Asian Fusion</div>
+            <div class="pill-city">NYC</div>
+          </div>
+        </div>
+        <div class="cuisine-pill platinum" style="cursor:default">
+          <span class="pill-emoji">🥘</span>
+          <div>
+            <div>Top 2% Korean</div>
+            <div class="pill-city">San Francisco</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Taste match between viewer and profile owner -->
+    <div style="margin: 12px 20px 0; background: var(--primary-light); border-radius: var(--radius-card); padding: 12px 14px; display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 22px;">🤝</span>
+      <div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--primary)">87% Taste Match</div>
+        <div style="font-size: 11px; color: var(--primary-tint); margin-top: 1px;">You both love Italian, Japanese, and Korean</div>
+      </div>
+    </div>
+
+    <div class="divider" style="margin-top: 14px;"></div>
+    <div class="taste-section">
+      <div class="taste-section-title">Taste Profile</div>
+      <div class="taste-bars">
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">Korean</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:95%; background: var(--success)"></div></div>
+          <div class="taste-bar-pct">95%</div>
+        </div>
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">Japanese</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:78%"></div></div>
+          <div class="taste-bar-pct">78%</div>
+        </div>
+        <div class="taste-bar-row">
+          <div class="taste-bar-label">Asian Fusion</div>
+          <div class="taste-bar-track"><div class="taste-bar-fill" style="width:60%"></div></div>
+          <div class="taste-bar-pct">60%</div>
+        </div>
+      </div>
+    </div>
+    <div style="height: 20px"></div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab-item"><span class="tab-icon">👤</span><span class="tab-label">Profile</span></div>
+    <div class="tab-item active"><span class="tab-icon">🏠</span><span class="tab-label">Home</span></div>
+    <div class="tab-item"><span class="tab-icon">🔍</span><span class="tab-label">Search</span></div>
+    <div class="tab-item"><span class="tab-icon">📋</span><span class="tab-label">Lists</span></div>
+    <div class="tab-item"><span class="tab-icon">🍽️</span><span class="tab-label">Rank</span></div>
+  </div>
+</div>
+
+</div><!-- /phone-inner -->
+</div><!-- /phone -->
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-title">Design decisions visible in this mockup</div>
+  <div class="legend-items">
+    <div class="legend-item"><div class="legend-dot" style="background: linear-gradient(135deg, #6a6a8a, #c8c8e0)"></div> Platinum = Top 1%</div>
+    <div class="legend-item"><div class="legend-dot" style="background: linear-gradient(135deg, #b8860b, #e8bf3a)"></div> Gold = Top 5%</div>
+    <div class="legend-item"><div class="legend-dot" style="background: linear-gradient(135deg, #707880, #9ea3ab)"></div> Silver = Top 10%</div>
+    <div class="legend-item"><div class="legend-dot" style="background: linear-gradient(135deg, #a0522d, #cd7f32)"></div> Bronze = Top 20%</div>
+    <div class="legend-item"><div class="legend-dot" style="background: var(--light); border: 1.5px dashed #ccc"></div> Dashed = in progress</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SHARESHEET BOTTOM SHEET (global overlay)
+═══════════════════════════════════════ -->
+<style>
+  .sheet-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45);
+    z-index: 10000; align-items: flex-end; justify-content: center;
+  }
+  .sheet-overlay.open { display: flex; }
+
+  .sharesheet {
+    width: 390px; background: white; border-radius: 22px 22px 0 0;
+    padding: 0 0 34px; overflow: hidden;
+    animation: slideUp .28s cubic-bezier(.32,.72,0,1) forwards;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  .sheet-handle { width: 36px; height: 4px; background: #ddd; border-radius: 2px; margin: 10px auto 0; }
+  .sheet-title  {
+    font-family: var(--font-body); font-size: 15px; font-weight: 600;
+    text-align: center; padding: 12px 16px 4px; color: var(--dark);
+  }
+
+  /* Horizontal scroll row — matches Beli's custom-sharesheet-options layout */
+  .sheet-actions {
+    display: flex; gap: 4px; overflow-x: auto; padding: 12px 12px 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .sheet-actions::-webkit-scrollbar { display: none; }
+
+  .sheet-action {
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    flex: 0 0 70px; cursor: pointer; padding: 4px 4px 0;
+  }
+  .sheet-action-icon {
+    width: 54px; height: 54px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; flex-shrink: 0;
+    transition: transform .12s;
+  }
+  .sheet-action:active .sheet-action-icon { transform: scale(.9); }
+  .sheet-action-label {
+    font-size: 11px; color: var(--medium); text-align: center;
+    font-weight: 500; line-height: 1.3; white-space: pre-line;
+  }
+
+  /* Beli-matched icon colors from data.service.ts */
+  .icon-ig-story  { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .icon-ig-post   { background: linear-gradient(135deg, #405de6, #5851db, #833ab4, #c13584, #e1306c); }
+  .icon-messages  { background: linear-gradient(135deg, #34c759, #30d158); }
+  .icon-tiktok    { background: #010101; }
+  .icon-save      { background: #3399ff; }
+  .icon-copy      { background: #636366; }
+  .icon-more      { background: #aeaeb2; }
+
+  /* Divider + Copy Profile Link row */
+  .sheet-divider { height: 1px; background: #f0f0f0; margin: 8px 0; }
+  .sheet-copy-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 20px; cursor: pointer;
+  }
+  .sheet-copy-icon { font-size: 20px; color: var(--dark); transform: rotate(-45deg); display: inline-block; }
+  .sheet-copy-label { font-size: 15px; font-weight: 500; color: var(--dark); }
+</style>
+
+<div class="sheet-overlay" id="sharesheet-overlay" onclick="closeSharesheet(event)">
+  <div class="sharesheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title" id="sheet-title">Share your badge</div>
+
+    <div class="sheet-actions">
+      <!-- IG Story -->
+      <div class="sheet-action" onclick="sheetTap('IG Story')">
+        <div class="sheet-action-icon icon-ig-story">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+        </div>
+        <div class="sheet-action-label">IG Story</div>
+      </div>
+
+      <!-- IG Post -->
+      <div class="sheet-action" onclick="sheetTap('IG Post')">
+        <div class="sheet-action-icon icon-ig-post">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+        </div>
+        <div class="sheet-action-label">IG Post</div>
+      </div>
+
+      <!-- Messages / iMessage -->
+      <div class="sheet-action" onclick="sheetTap('Messages')">
+        <div class="sheet-action-icon icon-messages">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+          </svg>
+        </div>
+        <div class="sheet-action-label">Messages</div>
+      </div>
+
+      <!-- TikTok -->
+      <div class="sheet-action" onclick="sheetTap('TikTok')">
+        <div class="sheet-action-icon icon-tiktok">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.84a8.2 8.2 0 004.79 1.53V6.9a4.85 4.85 0 01-1.02-.21z"/>
+          </svg>
+        </div>
+        <div class="sheet-action-label">TikTok</div>
+      </div>
+
+      <!-- Save to Camera Roll -->
+      <div class="sheet-action" onclick="sheetTap('Save')">
+        <div class="sheet-action-icon icon-save">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+          </svg>
+        </div>
+        <div class="sheet-action-label">Save</div>
+      </div>
+
+      <!-- Copy Link -->
+      <div class="sheet-action" onclick="sheetTap('Copy Link')">
+        <div class="sheet-action-icon icon-copy">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="white" style="transform:rotate(-45deg)">
+            <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+          </svg>
+        </div>
+        <div class="sheet-action-label">Copy Link</div>
+      </div>
+
+      <!-- More -->
+      <div class="sheet-action" onclick="sheetTap('More')">
+        <div class="sheet-action-icon icon-more">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+          </svg>
+        </div>
+        <div class="sheet-action-label">More</div>
+      </div>
+    </div>
+
+    <div class="sheet-divider"></div>
+    <!-- Copy profile link row (matches custom-sharesheet-options ion-item) -->
+    <div class="sheet-copy-row" onclick="sheetTap('Copy Profile Link')">
+      <span class="sheet-copy-icon">↗</span>
+      <span class="sheet-copy-label">Copy Profile Link</span>
+    </div>
+  </div>
+</div>
+
+<script>
+function openSharesheet(title) {
+  document.getElementById('sheet-title').textContent = title || 'Share';
+  document.getElementById('sharesheet-overlay').classList.add('open');
+}
+function closeSharesheet(e) {
+  document.getElementById('sharesheet-overlay').classList.remove('open');
+}
+function sheetTap(action) {
+  document.getElementById('sharesheet-overlay').classList.remove('open');
+  const msg = action === 'Copy Link' || action === 'Copy Profile Link' ? '🔗 Link copied!' : 'Opening ' + action + '…';
+  const toast = document.createElement('div');
+  toast.textContent = msg;
+  toast.style.cssText = 'position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:rgba(30,30,30,.92);color:white;padding:10px 22px;border-radius:20px;font-size:13px;font-weight:500;z-index:20000;opacity:0;transition:opacity .18s;white-space:nowrap;';
+  document.body.appendChild(toast);
+  requestAnimationFrame(() => { toast.style.opacity = '1'; });
+  setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 220); }, 1800);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const labels = {
+    'screen-profile': '① Own Profile',
+    'screen-badge-detail': '② Badge Detail',
+    'screen-unlock': '③ Badge Unlock 🎉',
+    'screen-feed': '④ Feed + Pills',
+    'screen-other': '⑤ Other User Profile',
+  };
+  document.querySelectorAll('.screen-nav button').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === labels[id]);
+  });
+  // Scroll to top of new screen
+  const content = document.getElementById(id).querySelector('.scroll-content');
+  if (content) content.scrollTop = 0;
+}
+</script>
+</body>
+</html>
