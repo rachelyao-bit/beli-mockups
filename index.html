@@ -426,7 +426,7 @@
 </head>
 <body>
 
-<h1 class="title">Beli — Cuisine Badges & Pills · Interactive Mockup</h1>
+<h1 class="title">Beli — Ranking Badges & Pills · Interactive Mockup</h1>
 
 <div class="screen-nav">
   <button class="active" onclick="showScreen('screen-profile')">① Own Profile</button>
@@ -469,7 +469,7 @@
       </div>
       <div class="profile-username">@rachel_yao</div>
       <div class="profile-since">Member since Jan 2022</div>
-      <div class="profile-bio">Always chasing the best pasta in the city 🍝</div>
+      <div class="profile-bio">Always finding the best coffee & cocktails in the city ☕</div>
     </div>
 
     <!-- Stats row -->
@@ -494,57 +494,43 @@
       <div class="btn-outline">Share Profile</div>
     </div>
 
-    <!-- ✨ NEW: CUISINE BADGES SECTION ✨ -->
+    <!-- ✨ NEW: RANKING BADGES SECTION ✨ -->
     <div class="badges-section">
       <div class="badges-section-header">
-        <div class="badges-section-title">🏅 Cuisine Badges</div>
+        <div class="badges-section-title">🏅 Ranking Badges</div>
         <div class="badges-section-link" onclick="showScreen('screen-badge-detail')">See all →</div>
       </div>
       <div class="pills-scroll">
-        <!-- Platinum: Top 1% -->
-        <div class="cuisine-pill platinum" onclick="showScreen('screen-badge-detail')" title="Tap for detail">
-          <span class="pill-emoji">🍝</span>
+        <!-- Gold: Top 5% Coffee -->
+        <div class="cuisine-pill gold" onclick="showScreen('screen-badge-detail')" title="Tap for detail">
+          <span class="pill-emoji">☕</span>
           <div>
-            <div>Top 1% Italian</div>
-            <div class="pill-city">NYC</div>
+            <div>Top 5% Coffee</div>
+            <div class="pill-city">Global</div>
           </div>
         </div>
-        <!-- Gold: Top 5% -->
+        <!-- Gold: Top 5% Bars -->
         <div class="cuisine-pill gold" onclick="showScreen('screen-badge-detail')">
-          <span class="pill-emoji">🍕</span>
+          <span class="pill-emoji">🍸</span>
           <div>
-            <div>Top 5% Pizza</div>
-            <div class="pill-city">NYC</div>
+            <div>Top 5% Bars</div>
+            <div class="pill-city">Global</div>
           </div>
         </div>
-        <div class="cuisine-pill gold" onclick="showScreen('screen-badge-detail')">
-          <span class="pill-emoji">🍱</span>
-          <div>
-            <div>Top 4% Japanese</div>
-            <div class="pill-city">NYC</div>
-          </div>
-        </div>
-        <!-- Silver: Top 10% -->
+        <!-- Silver: Top 10% Dessert -->
         <div class="cuisine-pill silver" onclick="showScreen('screen-badge-detail')">
-          <span class="pill-emoji">🌮</span>
+          <span class="pill-emoji">🍨</span>
           <div>
-            <div>Top 9% Mexican</div>
-            <div class="pill-city">NYC</div>
+            <div>Top 10% Dessert</div>
+            <div class="pill-city">Global</div>
           </div>
         </div>
-        <!-- Progress pill: not yet earned -->
+        <!-- Progress pill: 5 more to Top 5% Bakery -->
         <div class="progress-pill" onclick="showScreen('screen-badge-detail')">
-          <span class="pill-emoji">🍣</span>
+          <span class="pill-emoji">🥐</span>
           <div>
-            <div style="color: var(--dark)">Sushi</div>
-            <div class="pill-progress">4 more to Top 10%</div>
-          </div>
-        </div>
-        <div class="progress-pill" onclick="showScreen('screen-badge-detail')">
-          <span class="pill-emoji">🥘</span>
-          <div>
-            <div style="color: var(--dark)">Korean</div>
-            <div class="pill-progress">11 more to Top 10%</div>
+            <div style="color: var(--dark)">Bakeries</div>
+            <div class="pill-progress">5 more to Top 5%</div>
           </div>
         </div>
       </div>
@@ -552,22 +538,13 @@
 
     <!-- ✨ Progress nudge on profile ✨ -->
     <div style="padding: 10px 20px 0;">
-      <div style="font-size: 12px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px;">🎯 Next Badges</div>
-      <!-- Sushi nudge -->
+      <div style="font-size: 12px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px;">🎯 Next Badge</div>
+      <!-- Bakery nudge -->
       <div class="progress-nudge" style="margin-bottom: 6px;">
-        <span>🍣</span>
+        <span>🥐</span>
         <div class="progress-nudge-text" style="flex:1">
-          <div><strong>4 more Sushi</strong> rankings → <span style="color:#707880; font-weight:700">Top 10%</span></div>
-          <div class="progress-mini-bar" style="margin-top:5px"><div class="progress-mini-fill" style="width:60%"></div></div>
-        </div>
-        <span class="progress-nudge-action">Rank →</span>
-      </div>
-      <!-- Korean nudge -->
-      <div class="progress-nudge">
-        <span>🥘</span>
-        <div class="progress-nudge-text" style="flex:1">
-          <div><strong>11 more Korean</strong> rankings → <span style="color:#a0522d; font-weight:700">Top 20%</span></div>
-          <div class="progress-mini-bar" style="margin-top:5px"><div class="progress-mini-fill" style="width:22%"></div></div>
+          <div><strong>5 more Bakery</strong> rankings → <span style="color:#b8860b; font-weight:700">Top 5% Badge</span></div>
+          <div class="progress-mini-bar" style="margin-top:5px"><div class="progress-mini-fill" style="width:62%"></div></div>
         </div>
         <span class="progress-nudge-action">Rank →</span>
       </div>
@@ -631,65 +608,60 @@
   </div>
   <div class="nav-bar" style="padding-bottom: 0">
     <span class="back-btn" onclick="showScreen('screen-profile')">‹</span>
-    <span class="nav-title">Cuisine Badge</span>
+    <span class="nav-title">Ranking Badge</span>
     <span class="nav-icon">⬆️</span>
   </div>
 
   <div class="scroll-content">
     <!-- Badge header -->
     <div class="badge-detail-header">
-      <div class="badge-circle-large">🍝</div>
-      <div class="badge-title">Top 1% Italian Ranker</div>
-      <div class="badge-subtitle">You ranked more Italian restaurants than 99% of diners</div>
-      <div class="badge-city-chip">📍 New York City · Platinum</div>
+      <div class="badge-circle-large">☕</div>
+      <div class="badge-title">Top 5% Coffee Ranker</div>
+      <div class="badge-subtitle">You ranked more coffee spots than 95% of all Beli users</div>
+      <div class="badge-city-chip">☕ Coffee · Gold · Permanent</div>
     </div>
 
     <!-- Stats -->
     <div class="badge-stats-row">
       <div class="badge-stat">
-        <div class="badge-stat-num">112</div>
-        <div class="badge-stat-label">Italian Ranked</div>
+        <div class="badge-stat-num">47</div>
+        <div class="badge-stat-label">Coffee Spots Ranked</div>
       </div>
       <div class="badge-stat">
-        <div class="badge-stat-num">8.4</div>
+        <div class="badge-stat-num">8.6</div>
         <div class="badge-stat-label">Avg Score</div>
       </div>
       <div class="badge-stat">
-        <div class="badge-stat-num">#38</div>
-        <div class="badge-stat-label">NYC Rank</div>
+        <div class="badge-stat-num">#142</div>
+        <div class="badge-stat-label">Global Rank</div>
       </div>
     </div>
 
-    <!-- Tier progression -->
+    <!-- Badge earned status -->
     <div class="progress-section">
-      <div class="progress-title">Your Tier: Platinum</div>
-      <div class="progress-subtitle">Rank 5 more Italian to stay in Top 1% next month</div>
+      <div class="progress-title">Badge Earned ✓ · Gold</div>
+      <div class="progress-subtitle" style="color: var(--success)">This badge is permanently yours — it can never be taken away 🎉</div>
       <div class="tier-progress-bar">
-        <div class="tier-progress-fill" style="width: 95%; background: linear-gradient(90deg, #6a6a8a, #c8c8e0);"></div>
+        <div class="tier-progress-fill" style="width: 100%; background: linear-gradient(90deg, #b8860b, #e8bf3a);"></div>
       </div>
       <div class="tier-labels">
-        <span class="tier-label">Top 20%</span>
-        <span class="tier-label">Top 5%</span>
-        <span class="tier-label active">Top 1%</span>
+        <span class="tier-label">8 rankings</span>
+        <span class="tier-label active">13 rankings → Top 5% ✓</span>
       </div>
       <div class="tier-chips">
-        <div class="tier-chip bronze">Top 20%</div>
         <div class="tier-chip silver">Top 10%</div>
-        <div class="tier-chip gold">Top 5%</div>
-        <div class="tier-chip platinum">Top 1% ✓</div>
+        <div class="tier-chip gold">Top 5% ✓</div>
       </div>
     </div>
 
     <!-- How it's calculated -->
     <div class="explainer-card">
-      <div class="explainer-title">📊 How this badge is calculated</div>
+      <div class="explainer-title">📊 How this badge works</div>
       <div class="explainer-text">
-        Based on your Italian restaurant rankings in the last 30 days compared to other active Beli diners in New York City.<br><br>
-        • <span style="color:#cd7f32; font-weight:700">Top 20%</span> — ≥ 3 Italian rankings<br>
-        • <span style="color:#9ea3ab; font-weight:700">Top 10%</span> — ≥ 8 rankings<br>
-        • <span style="color:#d4a017; font-weight:700">Top 5%</span> &nbsp;— ≥ 18 rankings<br>
-        • <span style="color:#9a9ab8; font-weight:700">Top 1%</span> &nbsp;— ≥ 40 rankings<br><br>
-        Badges refresh monthly. You'll get a heads-up before your tier drops.
+        Based on your coffee spot rankings compared to all active Beli users globally.<br><br>
+        • <span style="color:#9ea3ab; font-weight:700">Top 10%</span> — ≥ 9 coffee rankings<br>
+        • <span style="color:#d4a017; font-weight:700">Top 5% (Gold)</span> — ≥ 13 rankings<br><br>
+        Badges are <strong>permanent once earned</strong>. You earned this badge and it's yours forever — no refresh window, no expiry.
       </div>
     </div>
 
@@ -731,20 +703,20 @@
     </div>
 
     <div class="unlock-eyebrow">New Badge Unlocked</div>
-    <div class="unlock-badge-circle">🍝</div>
-    <div class="unlock-title">You're a Top 5%<br>Italian Ranker in NYC!</div>
-    <div class="unlock-body">You ranked more Italian restaurants than 95% of diners in New York City this month. 🎉</div>
+    <div class="unlock-badge-circle">☕</div>
+    <div class="unlock-title">You're a Top 5%<br>Coffee Ranker!</div>
+    <div class="unlock-body">You ranked more coffee spots than 95% of all Beli users. This badge is yours — permanently. 🎉</div>
   </div>
 
   <!-- Share card preview -->
   <div class="share-card-preview">
-    <div class="share-card-inner">
+    <div class="share-card-inner" style="background: linear-gradient(170deg, #2c1a0e 0%, #4a2c12 50%, #6b3d1a 100%);">
       <div class="share-card-logo">BELI</div>
-      <div class="share-card-emoji">🍝</div>
-      <div class="share-card-headline">Top 5% Italian Ranker</div>
-      <div class="share-card-sub">New York City · June 2026</div>
+      <div class="share-card-emoji">☕</div>
+      <div class="share-card-headline">Top 5% Coffee Ranker</div>
+      <div class="share-card-sub">Global · June 2026</div>
       <div class="share-card-rank">Top 5%</div>
-      <div class="share-card-rank-label">of NYC Italian diners</div>
+      <div class="share-card-rank-label">of all Beli Coffee rankers</div>
       <div class="share-card-username">@rachel_yao on Beli</div>
     </div>
   </div>
@@ -782,26 +754,26 @@
 
   <div class="scroll-content">
 
-    <!-- Feed item 1: friend with Italian Gold badge -->
+    <!-- Feed item 1: friend with Coffee Gold badge -->
     <div class="feed-item">
       <div class="feed-item-header">
         <div class="feed-avatar">A</div>
         <div class="feed-user-info">
           <div class="feed-user-name">
             alex_chen
-            <!-- Cuisine pill next to name 🌟 -->
-            <span class="feed-user-pill" style="background: linear-gradient(135deg, #ccd8e8, #e8eef8); color: #2a3a5c; border: 1px solid rgba(180,200,230,.6);">🍝 Top 1% of Italian Diners</span>
+            <!-- Ranking pill next to name 🌟 -->
+            <span class="feed-user-pill" style="background: linear-gradient(135deg, #b8860b, #e8bf3a); color: #3a2800;">☕ Top 5% Coffee Ranker</span>
           </div>
-          <div class="feed-action">ranked a restaurant</div>
+          <div class="feed-action">ranked a coffee spot</div>
         </div>
         <div class="feed-time">2m</div>
       </div>
       <div class="feed-restaurant-card">
-        <div class="feed-rest-img">🍝</div>
+        <div class="feed-rest-img" style="background: linear-gradient(135deg, #4a2c12, #6b3d1a);">☕</div>
         <div class="feed-rest-info">
-          <div class="feed-rest-name">Via Carota</div>
-          <div class="feed-rest-meta">Italian · West Village · $$</div>
-          <div class="feed-rest-score">⭐ 9.2</div>
+          <div class="feed-rest-name">Gregorys Coffee</div>
+          <div class="feed-rest-meta">Coffee · Midtown · $</div>
+          <div class="feed-rest-score">⭐ 8.7</div>
         </div>
       </div>
       <div class="feed-reactions">
@@ -819,26 +791,26 @@
         <div class="feed-user-info">
           <div class="feed-user-name">
             rachel_yao
-            <span class="feed-user-pill" style="background: linear-gradient(135deg, #b8860b, #e8bf3a);">🍕 Top 5% of Pizza Lovers</span>
+            <span class="feed-user-pill" style="background: linear-gradient(135deg, #b8860b, #e8bf3a); color: #3a2800;">🍸 Top 5% Bar Ranker</span>
           </div>
-          <div class="feed-action">ranked a restaurant</div>
+          <div class="feed-action">ranked a bar</div>
         </div>
         <div class="feed-time">1h</div>
       </div>
       <div class="feed-restaurant-card">
-        <div class="feed-rest-img" style="background: linear-gradient(135deg, #e8845a, #f0a87a);">🍕</div>
+        <div class="feed-rest-img" style="background: linear-gradient(135deg, #1a1a3e, #2a2a6e);">🍸</div>
         <div class="feed-rest-info">
-          <div class="feed-rest-name">Lucali</div>
-          <div class="feed-rest-meta">Pizza · Carroll Gardens · $$</div>
-          <div class="feed-rest-score">⭐ 9.8</div>
+          <div class="feed-rest-name">Attaboy</div>
+          <div class="feed-rest-meta">Bar · Lower East Side · $$$</div>
+          <div class="feed-rest-score">⭐ 9.4</div>
         </div>
       </div>
-      <!-- 🌟 Progress nudge toward Sushi badge -->
+      <!-- 🌟 Progress nudge toward Bakery badge -->
       <div class="progress-nudge">
-        <span>🍣</span>
+        <span>🥐</span>
         <div class="progress-nudge-text">
-          4 more Sushi rankings to earn your <strong>Top 10% Sushi</strong> badge
-          <div class="progress-mini-bar"><div class="progress-mini-fill" style="width: 60%"></div></div>
+          5 more Bakery rankings to earn your <strong>Top 5% Bakery</strong> badge
+          <div class="progress-mini-bar"><div class="progress-mini-fill" style="width: 62%"></div></div>
         </div>
         <span class="progress-nudge-action">Rank now →</span>
       </div>
@@ -850,24 +822,24 @@
       </div>
     </div>
 
-    <!-- Feed item 3: friend with Korean badge -->
+    <!-- Feed item 3: friend with Dessert badge -->
     <div class="feed-item">
       <div class="feed-item-header">
         <div class="feed-avatar" style="background: linear-gradient(135deg, #329966, #47a375);">M</div>
         <div class="feed-user-info">
           <div class="feed-user-name">
             mia_park
-            <span class="feed-user-pill" style="background: linear-gradient(135deg, #b8860b, #e8bf3a);">🥘 Top 3% of Korean Diners</span>
+            <span class="feed-user-pill" style="background: linear-gradient(135deg, #707880, #9ea3ab); color: white;">🍨 Top 8% Dessert Ranker</span>
           </div>
-          <div class="feed-action">bookmarked a restaurant</div>
+          <div class="feed-action">bookmarked a dessert spot</div>
         </div>
         <div class="feed-time">3h</div>
       </div>
       <div class="feed-restaurant-card">
-        <div class="feed-rest-img" style="background: linear-gradient(135deg, #5a8a6a, #7aaa8a);">🥘</div>
+        <div class="feed-rest-img" style="background: linear-gradient(135deg, #e87aaa, #f0a8cc);">🍨</div>
         <div class="feed-rest-info">
-          <div class="feed-rest-name">Jua</div>
-          <div class="feed-rest-meta">Korean · Flatiron · $$$</div>
+          <div class="feed-rest-name">Morgenstern's</div>
+          <div class="feed-rest-meta">Ice Cream · Lower East Side · $</div>
           <div class="feed-rest-score" style="background: var(--warning); color: var(--dark);">Want</div>
         </div>
       </div>
@@ -939,45 +911,45 @@
       <div class="btn-outline">Message</div>
     </div>
 
-    <!-- Judy's cuisine badges — real ranking data -->
+    <!-- Judy's ranking badges -->
     <div class="badges-section">
       <div class="badges-section-header">
-        <div class="badges-section-title">🏅 Cuisine Badges</div>
+        <div class="badges-section-title">🏅 Ranking Badges</div>
       </div>
       <div style="font-size: 11px; color: var(--medium); margin-bottom: 8px;">
-        Judy ranks in the top % of NYC diners for these cuisines
+        Judy ranks in the top % of all Beli users for these format types
       </div>
       <div class="pills-scroll">
-        <!-- American: 313 all-time, #1 cuisine → Gold -->
+        <!-- Coffee → Gold -->
         <div class="cuisine-pill gold" style="cursor:default">
-          <span class="pill-emoji">🍔</span>
+          <span class="pill-emoji">☕</span>
           <div>
-            <div>Top 5% American</div>
-            <div class="pill-city">NYC</div>
+            <div>Top 5% Coffee</div>
+            <div class="pill-city">Global</div>
           </div>
         </div>
-        <!-- Italian: 213 all-time, #2 cuisine → Silver -->
+        <!-- Bars → Gold -->
+        <div class="cuisine-pill gold" style="cursor:default">
+          <span class="pill-emoji">🍸</span>
+          <div>
+            <div>Top 5% Bars</div>
+            <div class="pill-city">Global</div>
+          </div>
+        </div>
+        <!-- Dessert → Silver -->
         <div class="cuisine-pill silver" style="cursor:default">
-          <span class="pill-emoji">🍝</span>
+          <span class="pill-emoji">🍨</span>
           <div>
-            <div>Top 10% Italian</div>
-            <div class="pill-city">NYC</div>
+            <div>Top 10% Dessert</div>
+            <div class="pill-city">Global</div>
           </div>
         </div>
-        <!-- French: 114 all-time → Bronze -->
-        <div class="cuisine-pill bronze" style="cursor:default">
+        <!-- Bakery → in progress -->
+        <div class="progress-pill" style="cursor:default">
           <span class="pill-emoji">🥐</span>
           <div>
-            <div>Top 20% French</div>
-            <div class="pill-city">NYC</div>
-          </div>
-        </div>
-        <!-- Japanese: 100 all-time → in progress toward Bronze -->
-        <div class="progress-pill" style="cursor:default">
-          <span class="pill-emoji">🍣</span>
-          <div>
-            <div>Japanese · 6 away</div>
-            <div class="pill-city">from Top 20% NYC</div>
+            <div>Bakeries · 3 away</div>
+            <div class="pill-city">from Top 5%</div>
           </div>
         </div>
       </div>
@@ -988,7 +960,7 @@
       <span style="font-size: 22px;">🤝</span>
       <div>
         <div style="font-size: 13px; font-weight: 700; color: var(--primary)">91% Taste Match</div>
-        <div style="font-size: 11px; color: var(--primary-tint); margin-top: 1px;">You both love American, Italian, and French</div>
+        <div style="font-size: 11px; color: var(--primary-tint); margin-top: 1px;">You both love Coffee and Dessert spots</div>
       </div>
     </div>
 
