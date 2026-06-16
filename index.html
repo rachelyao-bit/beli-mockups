@@ -501,36 +501,44 @@
         <div class="badges-section-link" onclick="showScreen('screen-badge-detail')">See all →</div>
       </div>
       <div class="pills-scroll">
-        <!-- Gold: Top 5% Coffee -->
+        <!-- Gold: Top 3% Coffee · NYC (city beat global — more impressive) -->
         <div class="cuisine-pill gold" onclick="showScreen('screen-badge-detail')" title="Tap for detail">
           <span class="pill-emoji">☕</span>
           <div>
-            <div>Top 5% Coffee</div>
-            <div class="pill-city">Global</div>
+            <div>Top 3% Coffee</div>
+            <div class="pill-city">📍 NYC</div>
           </div>
         </div>
-        <!-- Gold: Top 5% Bars -->
+        <!-- Gold: Top 5% Coffee · Global -->
+        <div class="cuisine-pill gold" onclick="showScreen('screen-badge-detail')">
+          <span class="pill-emoji">☕</span>
+          <div>
+            <div>Top 5% Coffee</div>
+            <div class="pill-city">🌐 Global</div>
+          </div>
+        </div>
+        <!-- Gold: Top 5% Bars · NYC -->
         <div class="cuisine-pill gold" onclick="showScreen('screen-badge-detail')">
           <span class="pill-emoji">🍸</span>
           <div>
             <div>Top 5% Bars</div>
-            <div class="pill-city">Global</div>
+            <div class="pill-city">📍 NYC</div>
           </div>
         </div>
-        <!-- Silver: Top 10% Dessert -->
+        <!-- Silver: Top 10% Dessert · Global -->
         <div class="cuisine-pill silver" onclick="showScreen('screen-badge-detail')">
           <span class="pill-emoji">🍨</span>
           <div>
             <div>Top 10% Dessert</div>
-            <div class="pill-city">Global</div>
+            <div class="pill-city">🌐 Global</div>
           </div>
         </div>
-        <!-- Progress pill: 5 more to Top 5% Bakery -->
+        <!-- Progress pill: 5 more to Top 5% Bakery NYC -->
         <div class="progress-pill" onclick="showScreen('screen-badge-detail')">
           <span class="pill-emoji">🥐</span>
           <div>
             <div style="color: var(--dark)">Bakeries</div>
-            <div class="pill-progress">5 more to Top 5%</div>
+            <div class="pill-progress">5 more · Top 5% NYC</div>
           </div>
         </div>
       </div>
@@ -543,7 +551,7 @@
       <div class="progress-nudge" style="margin-bottom: 6px;">
         <span>🥐</span>
         <div class="progress-nudge-text" style="flex:1">
-          <div><strong>5 more Bakery</strong> rankings → <span style="color:#b8860b; font-weight:700">Top 5% Badge</span></div>
+          <div><strong>5 more Bakery</strong> rankings → <span style="color:#b8860b; font-weight:700">Top 5% NYC Badge</span></div>
           <div class="progress-mini-bar" style="margin-top:5px"><div class="progress-mini-fill" style="width:62%"></div></div>
         </div>
         <span class="progress-nudge-action">Rank →</span>
@@ -621,47 +629,55 @@
       <div class="badge-city-chip">☕ Coffee · Gold · Permanent</div>
     </div>
 
-    <!-- Stats -->
+    <!-- Stats: two rows — global + city -->
     <div class="badge-stats-row">
       <div class="badge-stat">
         <div class="badge-stat-num">47</div>
         <div class="badge-stat-label">Coffee Spots Ranked</div>
       </div>
       <div class="badge-stat">
-        <div class="badge-stat-num">8.6</div>
-        <div class="badge-stat-label">Avg Score</div>
+        <div class="badge-stat-num">Top 5%</div>
+        <div class="badge-stat-label">🌐 Global</div>
       </div>
       <div class="badge-stat">
-        <div class="badge-stat-num">#142</div>
-        <div class="badge-stat-label">Global Rank</div>
+        <div class="badge-stat-num">Top 3%</div>
+        <div class="badge-stat-label">📍 NYC</div>
       </div>
     </div>
 
-    <!-- Badge earned status -->
+    <!-- Badge earned status — show both badges earned -->
     <div class="progress-section">
-      <div class="progress-title">Badge Earned ✓ · Gold</div>
-      <div class="progress-subtitle" style="color: var(--success)">This badge is permanently yours — it can never be taken away 🎉</div>
-      <div class="tier-progress-bar">
-        <div class="tier-progress-fill" style="width: 100%; background: linear-gradient(90deg, #b8860b, #e8bf3a);"></div>
+      <div class="progress-title">Badges Earned ✓</div>
+      <div class="progress-subtitle" style="color: var(--success)">Permanent once earned — these can never be taken away 🎉</div>
+      <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+        <div style="background: linear-gradient(135deg, #b8860b, #e8bf3a); color: #3a2800; border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 700;">☕ Top 5% Coffee · 🌐 Global ✓</div>
+        <div style="background: linear-gradient(135deg, #b8860b, #e8bf3a); color: #3a2800; border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 700;">☕ Top 3% Coffee · 📍 NYC ✓</div>
+      </div>
+    </div>
+
+    <!-- In-progress: Bakery NYC -->
+    <div class="progress-section" style="margin-top: 10px;">
+      <div class="progress-title">In Progress · 🥐 Bakeries</div>
+      <div class="progress-subtitle">5 more Bakery rankings to earn <strong>Top 5% NYC</strong></div>
+      <div class="tier-progress-bar" style="margin-top: 8px;">
+        <div class="tier-progress-fill" style="width: 62%; background: linear-gradient(90deg, #a0522d, #cd7f32);"></div>
       </div>
       <div class="tier-labels">
-        <span class="tier-label">8 rankings</span>
-        <span class="tier-label active">13 rankings → Top 5% ✓</span>
-      </div>
-      <div class="tier-chips">
-        <div class="tier-chip silver">Top 10%</div>
-        <div class="tier-chip gold">Top 5% ✓</div>
+        <span class="tier-label">0</span>
+        <span class="tier-label active">8 rankings (you) → 13 needed</span>
       </div>
     </div>
 
     <!-- How it's calculated -->
     <div class="explainer-card">
-      <div class="explainer-title">📊 How this badge works</div>
+      <div class="explainer-title">📊 How badges work</div>
       <div class="explainer-text">
-        Based on your coffee spot rankings compared to all active Beli users globally.<br><br>
-        • <span style="color:#9ea3ab; font-weight:700">Top 10%</span> — ≥ 9 coffee rankings<br>
-        • <span style="color:#d4a017; font-weight:700">Top 5% (Gold)</span> — ≥ 13 rankings<br><br>
-        Badges are <strong>permanent once earned</strong>. You earned this badge and it's yours forever — no refresh window, no expiry.
+        You earn <strong>two separate badges</strong> per format type — one global, one for your home city. The pool for your city is smaller, so city rankings can be more or less competitive than global.<br><br>
+        <strong>Coffee · Global</strong> (306K rankers):<br>
+        • <span style="color:#9ea3ab; font-weight:700">Top 10%</span> — ≥ 9 rankings &nbsp;·&nbsp; <span style="color:#d4a017; font-weight:700">Top 5%</span> — ≥ 13 rankings<br><br>
+        <strong>Coffee · NYC</strong> (smaller pool):<br>
+        • <span style="color:#9ea3ab; font-weight:700">Top 10%</span> — ≥ 6 rankings &nbsp;·&nbsp; <span style="color:#d4a017; font-weight:700">Top 5%</span> — ≥ 9 rankings<br><br>
+        Badges are <strong>permanent once earned</strong> — no expiry, no refresh window.
       </div>
     </div>
 
@@ -704,8 +720,8 @@
 
     <div class="unlock-eyebrow">New Badge Unlocked</div>
     <div class="unlock-badge-circle">☕</div>
-    <div class="unlock-title">You're a Top 5%<br>Coffee Ranker!</div>
-    <div class="unlock-body">You ranked more coffee spots than 95% of all Beli users. This badge is yours — permanently. 🎉</div>
+    <div class="unlock-title">You're a Top 5%<br>Coffee Ranker · NYC!</div>
+    <div class="unlock-body">You ranked more coffee spots than 95% of NYC Beli users. This badge is yours permanently. 🎉<br><br><span style="font-size: 13px; opacity: .85;">You're also Top 5% globally — you've earned both!</span></div>
   </div>
 
   <!-- Share card preview -->
@@ -917,39 +933,46 @@
         <div class="badges-section-title">🏅 Ranking Badges</div>
       </div>
       <div style="font-size: 11px; color: var(--medium); margin-bottom: 8px;">
-        Judy ranks in the top % of all Beli users for these format types
+        Judy ranks in the top % globally and in NYC
       </div>
       <div class="pills-scroll">
-        <!-- Coffee → Gold -->
+        <!-- Coffee → Gold Global + Gold NYC -->
         <div class="cuisine-pill gold" style="cursor:default">
           <span class="pill-emoji">☕</span>
           <div>
             <div>Top 5% Coffee</div>
-            <div class="pill-city">Global</div>
+            <div class="pill-city">🌐 Global</div>
           </div>
         </div>
-        <!-- Bars → Gold -->
+        <div class="cuisine-pill gold" style="cursor:default">
+          <span class="pill-emoji">☕</span>
+          <div>
+            <div>Top 1% Coffee</div>
+            <div class="pill-city">📍 NYC</div>
+          </div>
+        </div>
+        <!-- Bars → Gold NYC -->
         <div class="cuisine-pill gold" style="cursor:default">
           <span class="pill-emoji">🍸</span>
           <div>
             <div>Top 5% Bars</div>
-            <div class="pill-city">Global</div>
+            <div class="pill-city">📍 NYC</div>
           </div>
         </div>
-        <!-- Dessert → Silver -->
+        <!-- Dessert → Silver Global -->
         <div class="cuisine-pill silver" style="cursor:default">
           <span class="pill-emoji">🍨</span>
           <div>
             <div>Top 10% Dessert</div>
-            <div class="pill-city">Global</div>
+            <div class="pill-city">🌐 Global</div>
           </div>
         </div>
-        <!-- Bakery → in progress -->
+        <!-- Bakery → in progress toward Global -->
         <div class="progress-pill" style="cursor:default">
           <span class="pill-emoji">🥐</span>
           <div>
             <div>Bakeries · 3 away</div>
-            <div class="pill-city">from Top 5%</div>
+            <div class="pill-city">Top 5% Global</div>
           </div>
         </div>
       </div>
